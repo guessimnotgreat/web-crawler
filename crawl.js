@@ -1,51 +1,51 @@
 const jsdom = require("jsdom");
 const { JSDOM } = jsdom;
 
-async function crawlPage(baseUrl, currentUrl, pages) {
-    const baseUrlObj = new URL(baseUrl);
-    const currentUrlObj = new URL(currentUrl);
+async function crawlPage(baseURL, currentURL, crawledPages) {
+    const baseURLObject = new URL(baseURL)
+    const currentURLObject = new URL(currentURL)
 
-    if (currentUrlObj.hostname !== baseUrlObj.hostname) {
-        return pages;
+    if (currentURLObject.hostname !== baseURLObject.hostname) {
+        return crawledPages
     }
 
-    const normalizeCurrentUrl = normalizeURL(currentUrl);
+    const normalizedCurrentURL = normalizeURL(currentURL)
 
-    if (pages[normalizeCurrentUrl]) {
-        pages[normalizeCurrentUrl]++;
-        return pages;
+    if (crawledPages[normalizedCurrentURL]) {
+        crawledPages[normalizedCurrentURL]++
+        return crawledPages
     } else {
-        pages[normalizeCurrentUrl] = baseUrl !== currentUrl ? 1 : 0;
+        crawledPages[normalizedCurrentURL] = baseURL !== currentURL ? 1 : 0
     }
 
-    console.log(`Crawling: ${currentUrl}`);
+    console.log(`Crawling: ${currentURL}`)
 
     try {
-        const resp = await fetch(currentUrl);
+        const response = await fetch(currentURL)
 
-        if (!resp.ok) {
-            console.error(`Error ${resp.status}: ${resp.statusText}`);
-            return pages;
+        if (!response.ok) {
+            console.error(`Error ${response.status}: ${response.statusText}`)
+            return crawledPages;
         }
 
-        const contentType = resp.headers.get('Content-Type');
+        const contentType = response.headers.get('Content-Type')
 
         if (!contentType || !contentType.includes('text/html')) {
-            console.error(`Invalid response content-type`);
-            return pages;
+            console.error(`Invalid response content-type`)
+            return crawledPages
         }
 
-        const html = await resp.text();
-        const linksFromHTML = getURLsFromHTML(html, baseUrl);
+        const html = await response.text()
+        const linksFromHTML = getURLsFromHTML(html, baseURL)
 
         for (const link of linksFromHTML) {
-            pages = await crawlPage(baseUrl, link, pages);
+            crawledPages = await crawlPage(baseURL, link, crawledPages)
         }
     } catch (error) {
-        console.error(`Fetching Error: ${error.message}`);
+        console.error(`Fetching Error: ${error.message}`)
     }
 
-    return pages;
+    return crawledPages
 }
 
 
@@ -66,6 +66,7 @@ function getURLsFromHTML(html, baseUrl) {
     return linksList
 }
 
+
 function normalizeURL(url) {
     let urlObj
     try {
@@ -77,7 +78,6 @@ function normalizeURL(url) {
     const result = `${urlObj.hostname}${pathWithoutTrailingSlash}`
     return result
 }
-
 
 
 module.exports = {

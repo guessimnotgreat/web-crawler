@@ -1,5 +1,6 @@
 const { test, expect } = require('@jest/globals')
-const { normalizeURL, getURLsFromHTML } = require('./crawl.js')
+const { normalizeURL, getURLsFromHTML } = require('./crawl.js');
+const { sortByValue } = require('./report.js');
 
 const testUrls = [
     'https://blog.boot.dev/path/',
@@ -38,3 +39,22 @@ test.each(Object.entries(testPaths))(
         expect(result).toEqual(expectedArr)
     }
 )
+
+const testSort = {
+    'test.com': 24,
+    'google.com': 10,
+    'youtube.com': 2,
+    'facebook.com': 17
+}
+const expectedSort = [
+    ['test.com', 24],
+    ['facebook.com', 17],
+    ['google.com', 10],
+    ['youtube.com', 2],
+]
+
+test('Test sort by value', () => {
+    const test = sortByValue(testSort)
+    console.log(test)
+    expect(sortByValue(testSort)).toEqual(expectedSort)
+})
