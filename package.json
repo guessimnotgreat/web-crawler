@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "web-crawler project",
   "scripts": {
-    "start": "node main.js"
+    "start": "node main.js",
+    "test": "jest"
   },
   "author": "great",
   "devDependencies": {
