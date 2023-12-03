@@ -1,6 +1,6 @@
-const { normalizeURL, getURLsFromHTML } = require('./crawl.js')
+const { normalizeURL, getURLsFromHTML, crawlPage } = require('./crawl.js')
 
-function main() {
+async function main() {
     const urlArg = process.argv[2]
 
     if (!urlArg) {
@@ -14,6 +14,10 @@ function main() {
     }
 
     console.log(`Start crawling at ${urlArg}`)
+    const pages = await crawlPage(urlArg, urlArg, {})
+    console.log('finished')
+    console.log(pages)
 }
 
 main()
+
