@@ -1,4 +1,5 @@
 function printReport(crawledPages) {
+    console.log('===== PRINT REPORT =====')
     const sortedPages = sortByValue(crawledPages)
     sortedPages.forEach(
         page => {

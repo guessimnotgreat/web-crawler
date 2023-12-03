@@ -11,11 +11,11 @@ async function crawlPage(baseURL, currentURL, crawledPages) {
 
     const normalizedCurrentURL = normalizeURL(currentURL)
 
-    if (crawledPages[normalizedCurrentURL]) {
+    if (crawledPages[normalizedCurrentURL] > 0) {
         crawledPages[normalizedCurrentURL]++
         return crawledPages
-    } else {
-        crawledPages[normalizedCurrentURL] = baseURL !== currentURL ? 1 : 0
+    } else { 
+        crawledPages[normalizedCurrentURL] = 1
     }
 
     console.log(`Crawling: ${currentURL}`)

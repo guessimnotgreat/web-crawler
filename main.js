@@ -14,9 +14,12 @@ async function main() {
         return;
     }
 
+    console.log('===== STARTING =====')
     console.log(`Start crawling at ${urlArg}`)
+    console.log('===== CRAWLING =====')
     const pages = await crawlPage(urlArg, urlArg, {})
     printReport(pages)
+    console.log('===== FINISHED =====')
 }
 
 main()
