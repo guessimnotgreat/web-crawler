@@ -1,0 +1,12 @@
+{
+  "name": "web-crawler",
+  "version": "1.0.0",
+  "description": "web-crawler project",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "author": "great",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
