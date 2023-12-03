@@ -1,13 +1,19 @@
 const { normalizeURL, getURLsFromHTML } = require('./crawl.js')
 
-normalizeURL('https://blog.boot.dev/path/')
+function main() {
+    const urlArg = process.argv[2]
 
-getURLsFromHTML(`<html>
-    <body>
-        <a href="/blog"><span>Go to Boot.dev</span></a>
-        <a href="/videos/"><span>Go to Boot.dev</span></a>
-        <a href="/review"><span>Go to Boot.dev</span></a>
-    </body>
-</html>
-`, 'https://www.boot.dev')
+    if (!urlArg) {
+        console.log('Invalid input: No URL provided')
+        return;
+    }
 
+    if (process.argv.length > 3) {
+        console.log('Invalid input: More than 1 URL provided')
+        return;
+    }
+
+    console.log(`Start crawling at ${urlArg}`)
+}
+
+main()
